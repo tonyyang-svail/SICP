@@ -1,0 +1,28 @@
+language: minimal
+
+branches:
+  only:
+  - develop
+  - "/release-*/"
+  - "/^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
+service:
+  - docker
+
+# Note(tony): Update to newer version of Docker to allow
+# Dockerfile being outside of the context directory
+# https://github.com/docker/compose/issues/4926#issuecomment-370501452
+addons:
+  apt:
+    packages:
+      - docker-ce
+install:
+  - echo "skip install"
+
+jobs:
+  include:
+    - stage: BuildAndTest
+      script:
+        - set -e
+        - docker build -t tonyyang/scheme .
+        - docker run -it -v $PWD:/work -w /work tonyyang/scheme bash scripts/test.sh
+

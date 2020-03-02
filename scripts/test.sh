@@ -2,5 +2,5 @@
 
 set -e
 
-scheme --quiet <  TestExample.scm
+scheme --quiet <  Chapter1.scm
 
